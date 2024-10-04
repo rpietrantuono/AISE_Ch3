@@ -4,6 +4,8 @@
 
 # Optuna
 import optuna
+from optuna.samplers import TPESampler
+
 
 # sklearn
 from sklearn.linear_model import LogisticRegression
@@ -50,8 +52,8 @@ if __name__ == "__main__":
     y_train = y[:train_samples]
     y_test = y[train_samples:]
 
-    study = optuna.create_study(direction='minimize')
+    study = optuna.create_study(direction='minimize', sampler=TPESampler())
     study.optimize(partial(objective, n_folds=n_folds, X=X_train, y=y_train), n_trials=16)
 
     print(study.best_trial.params)
-    print(stu)
+    print(study.best_trial.value)
